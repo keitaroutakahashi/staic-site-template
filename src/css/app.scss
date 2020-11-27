@@ -1,0 +1,14 @@
+@use 'foundation/mixin.scss';
+
+body {
+  @include mixin.screen-mobile {
+    background-color: black;
+  }
+  @include mixin.screen-desktop {
+    background-color: red;
+  }
+}
+
+.hoge {
+  display: inline;
+}
