@@ -1,0 +1,10 @@
+@use '../../foundation/mixin.scss';
+
+.c-button {
+  @include mixin.screen-mobile {
+    background-color: black;
+  }
+  @include mixin.screen-desktop {
+    background-color: red;
+  }
+}

@@ -8,14 +8,14 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default
 const imageminMozjpeg = require('imagemin-mozjpeg')
 
 module.exports = (env, argv) => {
-  const enabledSourceMap = argv.mode === 'development'
+  const isProduction = argv.mode === 'production'
 
   return {
     mode: process.env.WEBPACK_ENV,
     entry: './src/js/index.js',
     output: {
       path: outputPath,
-      filename: 'js/bundle.[contenthash].js',
+      filename: 'assets/js/bundle.[contenthash].js',
     },
 
     module: {
@@ -30,14 +30,14 @@ module.exports = (env, argv) => {
               loader: 'css-loader',
               options: {
                 url: false,
-                sourceMap: enabledSourceMap,
+                sourceMap: !isProduction,
                 importLoaders: 2,
               },
             },
             {
               loader: 'sass-loader',
               options: {
-                sourceMap: enabledSourceMap,
+                sourceMap: !isProduction,
               },
             },
           ],
@@ -52,7 +52,7 @@ module.exports = (env, argv) => {
               loader: 'css-loader',
               options: {
                 url: false,
-                sourceMap: enabledSourceMap,
+                sourceMap: !isProduction,
                 importLoaders: 2,
               },
             },
@@ -68,15 +68,20 @@ module.exports = (env, argv) => {
     plugins: [
       new CleanWebpackPlugin(),
       new MiniCssExtractPlugin({
-        filename: 'css/app.[contenthash].css',
+        filename: 'assets/css/app.[contenthash].css',
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'src', 'html', 'index.html'),
         filename: 'index.html',
         title: 'HOME',
       }),
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, 'src', 'html', 'about/index.html'),
+        filename: 'about/index.html',
+        title: 'HOME',
+      }),
       new CopyPlugin({
-        patterns: [{ from: 'src/img', to: 'img' }],
+        patterns: [{ from: 'src/img', to: 'assets/img' }],
       }),
       new ImageminPlugin({
         test: /\.(jpe?g|png|gif|svg)$/i,
